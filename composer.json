@@ -1,0 +1,24 @@
+{
+	"name": "crucifyer/facedetector-php",
+	"description": "Detect the position of a human face using GD.",
+	"type": "library",
+	"license": "GPL-2.0",
+	"version": "1.0",
+	"minimum-stability": "stable",
+	"authors": [
+		{
+			"name": "Song Hyo-Jin",
+			"email": "shj@xenosi.de",
+			"homepage": "https://github.com/crucifyer/"
+		}
+	],
+	"autoload": {
+		"psr-4": {
+			"Xeno\\": "src/"
+		}
+	},
+	"require": {
+		"php": ">=5.4",
+		"ext-gd": "*"
+	}
+}
