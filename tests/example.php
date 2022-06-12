@@ -11,6 +11,10 @@ $face = $detector->FaceDetect();
 $size = $detector->getImageSize();
 $direction = \Xeno\Image\FaceDetector::AlignDirection($size['width'], $size['height'], $face['x'], $face['y'], $face['w']);
 
+$im = $detector->getImage();
+imagerectangle($im, $face['x'], $face['y'], $face['x'] + $face['w'], $face['y'] + $face['w'], 0xff0000);
+imagejpeg($im, 'detected.jpg');
+
 print_r([
 	$face, $direction
 ]);

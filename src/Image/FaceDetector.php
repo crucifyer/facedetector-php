@@ -44,6 +44,10 @@ class FaceDetector
 		return ['width' => imagesx($this->im), 'height' => imagesy($this->im)];
 	}
 
+	public function getImage() {
+		return $this->im;
+	}
+
 	public function FaceDetect($multiple = null, $resSize = 280) {
 		$size = $this->getImageSize();
 		$im_width = $size['width'];
