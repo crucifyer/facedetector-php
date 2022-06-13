@@ -5,7 +5,7 @@ namespace Xeno\Image;
 class FaceDetector
 {
 	private static $detection = null;
-	private $im;
+	private $im, $direction = null;
 
 	public function __construct($img) {
 		if(!self::$detection) {
@@ -48,13 +48,12 @@ class FaceDetector
 		return $this->im;
 	}
 
-	public function FaceDetect($multiple = null, $resSize = 280) {
+	public function FaceDetect($multiple = null, $resSize = 281) {
 		$size = $this->getImageSize();
 		$im_width = $size['width'];
 		$im_height = $size['height'];
 		$diff_width = $resSize - $im_width;
 		$diff_height = $resSize - $im_height;
-		$ratio = 0;
 
 		if($diff_width > $diff_height) {
 			$ratio = $im_width / $resSize;
@@ -72,7 +71,6 @@ class FaceDetector
 			$im = imagecreatetruecolor($im_width, $im_height);
 			imagecopy($im, $this->im, 0, 0, 0, 0, $im_width, $im_height);
 		}
-		imagealphablending($im, false);
 
 		if(!$multiple) {
 			$face = $this->detecting($im, $im_width, $im_height);
@@ -245,5 +243,72 @@ class FaceDetector
 			if($face['w'] > $maxw) $res[] = $face;
 		}
 		return $res;
+	}
+
+	public function getDirection($resSize = null) {
+		if(!$resSize && $this->direction) return $this->direction;
+		$s = $this->getImageSize();
+		if(!$faces = $this->FaceDetect(2, $resSize ? $resSize : 281)) {
+			$this->direction = $s['width'] > $s['height'] ? 'center' : 'middle';
+			return $this->direction;
+		}
+		$faces = self::FilterSmallFaces($faces);
+		$cnt = count($faces);
+		if($cnt != 1) {
+			$this->direction = $s['width'] > $s['height'] ? 'center' : 'middle';
+			return $this->direction;
+		}
+		$face = $faces[0];
+		$this->direction = self::AlignDirection($s['width'], $s['height'], $face['x'], $face['y'], $face['w']);
+		return $this->direction;
+	}
+
+	public function cropThumbnail($size, $direction = null, $file = null, $type = null) { // type: gif, jpg, png, png8
+		if(!$direction) $direction = $this->getDirection();
+		$s = $this->getImageSize();
+		$im_width = $s['width'];
+		$im_height = $s['height'];
+
+		$sx = 0; $sy= 0; $sw = min($im_width, $im_height);
+		$size = min($size, $sw);
+		switch($direction) {
+			case 'left':
+				break;
+			case 'center':
+				$sx = ($im_width - $sw) >> 1;
+				break;
+			case 'right':
+				$sx = ($im_width - $sw) >> 0;
+				break;
+			case 'top':
+				break;
+			case 'middle':
+				$sy = ($im_height - $sw) >> 1;
+				break;
+			case 'bottom':
+				$sy = ($im_height - $sw) >> 0;
+				break;
+		}
+		$im = imagecreatetruecolor($size, $size);
+		imagecopyresampled($im, $this->im, 0, 0, $sx, $sy, $size, $size, $sw, $sw);
+		if(!$file) return $im;
+		if(!$type) {
+			$type = strtolower(preg_replace('~^.*\.([^\.]+)$~', '$1', $file));
+		}
+		switch($type) {
+			case 'gif':
+				imagegif($im, $file);
+				break;
+			case 'png':
+				imagepng($im, $file);
+				break;
+			case 'png8':
+				imagetruecolortopalette($im, true, 255);
+				break;
+			default:
+				imagejpeg($im, $file);
+				break;
+		}
+		return true;
 	}
 }

@@ -50,4 +50,25 @@ $faces = \Xeno\Image\FaceDetector::FilterSmallFaces($faces);
 ```
 - 가장 큰 것 대비 60% 이상 작은것을 걸러냅니다.
 
+```php
+$detector = new \Xeno\Image\FaceDetector(imagefile or gdresource or imagebinary);
+$direction = $detector->getDirection();
+```
+- 방향 인식까지의 과정을 자동화 합니다. 여러 얼굴을 인식하면 중앙정렬 합니다.
+
+```php
+$detector = new \Xeno\Image\FaceDetector(imagefile or gdresource or imagebinary);
+[gd resource or boolean] = $detector->cropThumbnail(size, [direction], [file], [type]);
+```
+- 크롭된 썸네일을 반환합니다. size 보다 원본이 작아도 키워서 맞추지 않고, 비율대로 자르기만 합니다.
+#### direction
+- 생략하면 getDirection 을 해서 채웁니다.
+#### file
+- 생략하면 gd resource 를 반환합니다.
+#### type
+- gif, jpg, png, png8 을 지원하고 생략하면 file 의 확장자로 판별합니다.
+- png8 은 gif 와 같은 방식인 indexed colors 라서 용량이 작고 화질이 안좋습니다.
+
+### 전반적인 예제가 tests/example.php 에 들어있습니다. autoload.php 위치를 수정하고 콘솔에서 테스트하세요.
+
 ### js project: [https://github.com/crucifyer/facedetector-js](https://github.com/crucifyer/facedetector-js)

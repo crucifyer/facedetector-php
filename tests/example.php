@@ -7,7 +7,7 @@ chdir(__DIR__);
 include_once '../vendor/autoload.php';
 
 $detector = new \Xeno\Image\FaceDetector($_SERVER['argv'][1]);
-$face = $detector->FaceDetect();
+if(!$face = $detector->FaceDetect()) die("The face cannot be detected.\n");
 $size = $detector->getImageSize();
 $direction = \Xeno\Image\FaceDetector::AlignDirection($size['width'], $size['height'], $face['x'], $face['y'], $face['w']);
 
@@ -31,3 +31,10 @@ print_r([
 	$faces
 ]);
 
+$detector = new \Xeno\Image\FaceDetector($_SERVER['argv'][1]);
+$direction = $detector->getDirection();
+echo "direction: $direction\n";
+
+$detector = new \Xeno\Image\FaceDetector($_SERVER['argv'][1]);
+$detector->cropThumbnail(300, null, 'thumbnail.300.jpg');
+$detector->cropThumbnail(500, null, 'thumbnail.500.jpg');
