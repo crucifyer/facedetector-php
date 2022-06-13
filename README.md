@@ -5,7 +5,7 @@ GD 를 이용해 이미지의 얼굴 위치를 식별합니다.
 - [mauricesvay/php-facedetection](https://github.com/mauricesvay/php-facedetection) 프로젝트를 기반으로 만들었습니다.
 - [js 로 포팅](https://github.com/crucifyer/facedetector-js)하며 개선한 사항들을 적용하여 error_reporting = E_ALL safe 하게 php 코드를 새로 작성했습니다.
 - 라이센스가 GPL-2.0 인 이유는 [원본의 라이센스](https://github.com/mauricesvay/php-facedetection/issues/18)를 유지해야하기 때문입니다.
-- 이미지 크기에 따라 인식률에 큰 차이가 생깁니다. 알고리즘의 원리를 이해하지 못해서 크기 외의 인식률 개선 작업을 하지 못했습니다. 테스트에 사용된 이미지들은 대부분 281px 일 때의 결과가 가장 좋기 때문에 기본값이 281 입니다. (280 으로 하면 모바일 인식률이 떨어져서 바꿨습니다. 모바일 기기의 aspect ratio 의 영향일것이라 생각됩니다.)
+- 이미지 크기에 따라 인식률에 큰 차이가 생깁니다. 알고리즘의 원리를 이해하지 못해서 크기 외의 인식률 개선 작업을 하지 못했습니다. 테스트에 사용된 이미지들은 대부분 281px 일 때의 결과가 가장 좋기 때문에 기본값이 281 입니다.
 - 자원소모가 심한편이기 때문에 썸네일 정렬 용도로 사용하려면, 실시간 적용 보다는 업로드시 검출하여 direction 값을 함께 저장하는것이 좋습니다.
 
 ```bash
