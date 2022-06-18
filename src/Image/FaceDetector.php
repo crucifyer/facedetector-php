@@ -20,6 +20,9 @@ class FaceDetector
 				case 'image/jpeg':
 					$this->im = imagecreatefromjpeg($img);
 					break;
+				case 'image/webp':
+					$this->im = imagecreatefromwebp($img);
+					break;
 				case 'image/png':
 					$this->im = imagecreatefrompng($img);
 					break;
@@ -298,6 +301,9 @@ class FaceDetector
 		switch($type) {
 			case 'gif':
 				imagegif($im, $file);
+				break;
+			case 'webp':
+				imagewebp($im, $file);
 				break;
 			case 'png':
 				imagepng($im, $file);

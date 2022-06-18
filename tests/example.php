@@ -36,5 +36,5 @@ $direction = $detector->getDirection();
 echo "direction: $direction\n";
 
 $detector = new \Xeno\Image\FaceDetector($_SERVER['argv'][1]);
-$detector->cropThumbnail(300, null, 'thumbnail.300.jpg');
-$detector->cropThumbnail(500, null, 'thumbnail.500.jpg');
+$detector->cropThumbnail(300, null, 'thumbnail.300.webp');
+$detector->cropThumbnail(500, null, 'thumbnail.500.webp');
