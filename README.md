@@ -28,7 +28,7 @@ $faces = $detector->FaceDetect(true);
 
 FaceDetector::FaceDetect([multiplue bool], [resSize int])
 ```
-- gif, jpeg, png 이미지 파일, gd 리소스, 이미지 바이너리가 가능합니다.
+- gif, jpeg, png, webp 이미지 파일, gd 리소스, 이미지 바이너리가 가능합니다.
 #### multiple 
 - multiple 값을 true 로 주면 얼굴위치를 최대 10개까지 더 찾아서 배열로 반환합니다.
 - true 대신 숫자를 입력할 수 있고, 2~50으로 제한됩니다.
@@ -66,7 +66,7 @@ $detector = new \Xeno\Image\FaceDetector(imagefile or gdresource or imagebinary)
 #### file
 - 생략하면 gd resource 를 반환합니다.
 #### type
-- gif, jpg, png, png8 을 지원하고 생략하면 file 의 확장자로 판별합니다.
+- gif, jpg, png, png8, webp 를 지원하고 생략하면 file 의 확장자로 판별합니다.
 - png8 은 gif 와 같은 방식인 indexed colors 라서 용량이 작고 화질이 안좋습니다.
 
 ### 전반적인 예제가 tests/example.php 에 들어있습니다. autoload.php 위치를 수정하고 콘솔에서 테스트하세요.
